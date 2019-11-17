@@ -11,6 +11,9 @@ class Themes {
   
   /* 基础设置 */
 
+  // 设计稿尺寸
+  static final double designDraftHeight = 1334;
+  static final double designDraftWidth  = 750;
   // 全局标题
   static final String title = "蜂鸟云测";
   // 版本号

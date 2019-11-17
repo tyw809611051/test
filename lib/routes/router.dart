@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import '../pages/Tabs.dart';
+import '../pages/users/Login.dart';
 
 final routes={
   '/': (context) => Tabs(),
+  '/login': (context) => LoginPage(),
 };
 
 /**

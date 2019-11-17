@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [],
       child: MaterialApp(
-        initialRoute: '/',
+        initialRoute: '/login',
         onGenerateRoute: onGenerateRoute,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
