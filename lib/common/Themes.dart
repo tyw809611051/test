@@ -12,8 +12,8 @@ class Themes {
   /* 基础设置 */
 
   // 设计稿尺寸
-  static final double designDraftHeight = 1334;
-  static final double designDraftWidth  = 750;
+  static final double designDraftHeight = 1334.0;
+  static final double designDraftWidth  = 750.0;
   // 全局标题
   static final String title = "蜂鸟云测";
   // 版本号
@@ -21,13 +21,13 @@ class Themes {
   // 主题颜色
   static final int primaryColor = 0xFFFEA34D; 
   // 字体大小
-  static final double fontSizeBase = 12;
+  static final double fontSizeBase = 12.0;
 
   /* 表单 */
-  
+
   // 表单宽高
-  static final double formBasicHeight = 70;
-  static final double formBasicWidth  = 70;
+  static final double formBasicHeight = 130.0;
+  static final double formBasicWidth  = 70.0;
   /* 按钮 */
   static final int btnPrimaryColor = 0xFFFFFFFF;
 }

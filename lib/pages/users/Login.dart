@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../components/BaseForm/BaseText.dart';
 
 /**
  * @description: 登录页 
@@ -33,9 +34,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            SizedBox(height: 30,)
+            SizedBox(height: 30,),
             // 表单部分
-            
+            BaseText(
+              text: "请输入用户名",
+              onChanged: (value) {
+                print(value);
+              },
+            ),
 
           ],
         ),
