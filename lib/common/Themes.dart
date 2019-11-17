@@ -23,6 +23,11 @@ class Themes {
   // 字体大小
   static final double fontSizeBase = 12;
 
+  /* 表单 */
+  
+  // 表单宽高
+  static final double formBasicHeight = 70;
+  static final double formBasicWidth  = 70;
   /* 按钮 */
   static final int btnPrimaryColor = 0xFFFFFFFF;
 }

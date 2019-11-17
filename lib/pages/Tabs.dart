@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/Api.dart';
+import '../services/ScreenAdapter.dart';
 
 class Tabs extends StatefulWidget {
   Tabs({Key key}) : super(key: key);
@@ -31,6 +32,9 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
+    // 屏幕适配
+    ScreenAdapter.init(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text("haha"),
