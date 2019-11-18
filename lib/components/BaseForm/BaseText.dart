@@ -18,8 +18,9 @@ class BaseText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: ScreenAdapter.height(Themes.formBasicHeight),
-      width: 300.0,
-      margin: EdgeInsets.all(30),
+      // width: 100.0,
+      margin: EdgeInsets.only(right: 30),
+      padding: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
         border: Border(
             bottom: BorderSide(
@@ -27,21 +28,16 @@ class BaseText extends StatelessWidget {
           color: Colors.black12,
         )),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          TextField(
-            obscureText: this.isPassword,
-            decoration: InputDecoration(
-                icon: Icon(Icons.person_outline),
-                hintText: this.text,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide.none,
-                )),
-            onChanged: this.onChanged,
-          )
-        ],
+      child: TextField(
+        obscureText: this.isPassword,
+        decoration: InputDecoration(
+            // icon: Icon(Icons.person_outline),
+            hintText: this.text,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide.none,
+            )),
+        onChanged: this.onChanged,
       ),
     );
   }

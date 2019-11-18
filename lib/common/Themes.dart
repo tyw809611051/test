@@ -26,8 +26,8 @@ class Themes {
   /* 表单 */
 
   // 表单宽高
-  static final double formBasicHeight = 130.0;
+  static final double formBasicHeight = 80.0;
   static final double formBasicWidth  = 70.0;
   /* 按钮 */
-  static final int btnPrimaryColor = 0xFFFFFFFF;
+  static final int btnPrimaryColor = 0xFFFEA34D;
 }
