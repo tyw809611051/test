@@ -19,7 +19,7 @@ class Themes {
   // 版本号
   static final String version = "V1.0.0";
   // 主题颜色
-  static final int primaryColor = 0xFFFEA34D; 
+  static const Color primaryColor = Color(0xFFFEA34D); 
   // 字体大小
   static final double fontSizeBase = 12.0;
 
@@ -29,5 +29,5 @@ class Themes {
   static final double formBasicHeight = 80.0;
   static final double formBasicWidth  = 70.0;
   /* 按钮 */
-  static final int btnPrimaryColor = 0xFFFEA34D;
+  static const Color btnPrimaryColor = Color(0xFFFEA34D);
 }

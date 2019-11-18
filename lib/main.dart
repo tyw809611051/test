@@ -19,11 +19,11 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [],
       child: MaterialApp(
-        initialRoute: '/login',
+        initialRoute: '/',
         onGenerateRoute: onGenerateRoute,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Color(Themes.primaryColor)
+          primaryColor: Themes.primaryColor
         ),
       ),
     );

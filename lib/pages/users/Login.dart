@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
 
             BaseButton(
               text: "登录",
-              color: Color(Themes.btnPrimaryColor),
+              color: Themes.btnPrimaryColor,
             ),
             SizedBox(
               height: 50,
