@@ -72,7 +72,7 @@ class _TaskPageState extends State<TaskPage> {
                       border: (this._selectHeader == value['id'])
                           ? Border(
                               bottom: BorderSide(
-                                  width: 1, color: Themes.btnPrimaryColor),
+                                  width: 1, color: Themes.primaryColor),
                             )
                           : null,
                     ),
@@ -210,6 +210,8 @@ class _TaskPageState extends State<TaskPage> {
             controller: _initKeywordsController,
             autofocus: false,
             decoration: InputDecoration(
+              hintText: "搜索标题或单号",
+              contentPadding: EdgeInsets.only(top: 8,left:8),
                 border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(30),
