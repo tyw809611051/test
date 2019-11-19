@@ -22,17 +22,18 @@ class BaseText extends StatelessWidget {
       margin: EdgeInsets.only(right: 30),
       padding: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-        border: Border(
-            bottom: BorderSide(
-          width: 1,
-          color: Colors.black12,
-        )),
+        // border: Border(
+        //     bottom: BorderSide(
+        //   width: 1,
+        //   color: Colors.black12,
+        // )),
       ),
       child: TextField(
         obscureText: this.isPassword,
         decoration: InputDecoration(
             // icon: Icon(Icons.person_outline),
             hintText: this.text,
+            contentPadding: EdgeInsets.only(top: 20),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide.none,
