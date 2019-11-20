@@ -27,7 +27,7 @@ class Copyright extends StatelessWidget {
             ),
             Icon(Icons.copyright),
             Text(
-              "${toYear.year} 蜂鸟云测 ${Env.version}",
+              "${toYear.year} 蜂鸟云测 ${Env.VERSON}",
               style: TextStyle(color: Colors.black45),
             )
           ],

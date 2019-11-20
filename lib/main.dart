@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'routes/router.dart';
 import './common/Themes.dart';
+import './services/CustomNavigatorObserver.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,6 +20,8 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [],
       child: MaterialApp(
+        navigatorObservers: [CustomNavigatorObserver()],
+        
         initialRoute: '/',
         onGenerateRoute: onGenerateRoute,
         debugShowCheckedModeBanner: false,

@@ -5,5 +5,10 @@
  * @version V1.0.0 
  */
 class Env {
-  static const String version = "V1.0.0";
+  // 版本
+  static const String VERSON = "V1.0.0";
+  // 请求API
+  static const String API = "https://api.test.cisslab.com/";
+  // 调试模式
+  static const bool DEBUG = true;
 }

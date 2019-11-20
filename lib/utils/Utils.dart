@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../services/Storage.dart';
+import '../services/CustomNavigatorObserver.dart';
 
 /**
  * @description: 工具类
@@ -9,4 +11,26 @@ import 'package:flutter/material.dart';
 
 class  Utils {
   
+  // 网络错误结果数据
+  static Map resultData(error_code,msg,{data=""}) {
+    return {
+      "data": data,
+      "error_code": error_code,
+      "msg": msg
+    };
+  }
+
+  // 请求基础header头
+  static getRequestHeader() async{
+    var accessToken = await Storage.getString("access_token");
+    if (accessToken == "") {
+      // 跳转到登录页
+      CustomNavigatorObserver.getInstance().navigator.pushNamed("/login");
+    }
+
+    return {
+      "Access-Token": accessToken,
+      "Accept": "application/json",
+    };
+  }
 }

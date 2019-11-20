@@ -17,7 +17,11 @@ class Storage {
   // 获取存储值
   static Future<String> getString(key) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    return sp.getString(key);
+    try {
+      return sp.getString(key);
+    } catch (e) {
+      return "";
+    }
   }
 
   // 移除key对应的值
