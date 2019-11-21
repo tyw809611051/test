@@ -2,6 +2,9 @@ import '../../common/Themes.dart';
 import 'package:flutter/material.dart';
 import '../../services/ScreenAdapter.dart';
 import '../../components/Label.dart';
+import '../../services/Api.dart';
+import '../../utils/Utils.dart';
+import '../../components/Loading.dart';
 
 /**
  * @description: 委托单列表页
@@ -18,8 +21,19 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
+  // 配置search搜索框的值
+  var _initKeywordsController = TextEditingController();
+  // 用于上拉分页
+  ScrollController _scrollController = ScrollController();
+  // 分页
+  int _page = 1;
+  bool _flag = true;
+  bool _hasMore = true;
   // 二级导航初始选中
   int _selectHeader = 1;
+  // 委托单数据
+  List _taskList = [];
+
   // 二级导航数据
   List _subHeaderList = [
     {"id": 1, "title": "未开始", "status": "6"},
@@ -27,24 +41,98 @@ class _TaskPageState extends State<TaskPage> {
     {"id": 3, "title": "已完成", "status": "9"},
   ];
 
-  // 配置search搜索框的值
-  var _initKeywordsController = TextEditingController();
-  // 用于上拉分页
-  ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+
+    _getTaskListData();
+  }
 
   // 获取委托单列表数据
-  _getTaskListData() {
-    print(111);
+  _getTaskListData() async {
+    setState(() {
+      this._flag = false;
+    });
+
+    Map<String, dynamic> params = Map();
+    var title = this._initKeywordsController.text;
+    if (title != "") {
+      params["title"] = title;
+    }
+    params['page'] = this._page;
+    params['status'] = this._subHeaderList[this._selectHeader - 1]['status'];
+    print(params);
+    // 请求数据
+    var res = await Api.taskList(params);
+
+    Utils.showToast(res["error_code"], res["msg"]);
+
+    Map taskList = res["data"];
+    Map pagination = taskList["pagination"];
+    bool hasMore = true;
+
+    if (pagination["current"] * pagination["pageSize"] >= pagination["total"]) {
+      hasMore = false;
+    }
+
+    setState(() {
+      this._taskList.addAll(taskList["list"]);
+      this._page++;
+      this._flag = true;
+      this._hasMore = hasMore;
+    });
   }
 
   // 上拉刷新
-  _showMore(index) {}
+  _showMore(index) {
+    if (this._hasMore) {
+      return (index == this._taskList.length - 1) ? LoadingWidget() : Text("");
+    } else {
+      return (index == this._taskList.length - 1)
+          ? Text("---我的有底线的---")
+          : Text("");
+    }
+  }
 
   // 切换二级tab栏
   _subHeaderChange(id) {
     setState(() {
       this._selectHeader = id;
     });
+  }
+
+  // 根据不同状态展示不同标签
+  Widget _showStatusTags(Map status) {
+    String text;
+    Color color;
+    switch (this._selectHeader) {
+      case 1:
+        color = Colors.blue;
+        break;
+      case 2:
+        color = Colors.black;
+        break;
+      case 3:
+        color = Colors.green;
+        break;
+      default:
+        break;
+    }
+    text = status['text'];
+
+    return Container(
+      height: ScreenAdapter.height(48),
+      margin: EdgeInsets.only(right: 10),
+      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: color),
+          color: Color.fromRGBO(250, 250, 250, 0.9)),
+      child: Text(
+        "${text}",
+        style: TextStyle(color: color),
+      ),
+    );
   }
 
   // 顶部tab栏
@@ -107,8 +195,19 @@ class _TaskPageState extends State<TaskPage> {
       margin: EdgeInsets.only(top: ScreenAdapter.height(80)),
       child: ListView.builder(
         controller: _scrollController,
-        itemCount: 10,
+        itemCount: this._taskList.length,
         itemBuilder: (context, index) {
+          // 时间
+          String createdAt = this._taskList[index]['created_at'].toString();
+          createdAt = createdAt.substring(0, 10);
+          // 标签
+          List tags = [];
+          if (this._taskList[index]['services'].isNotEmpty) {
+            this._taskList[index]['services'].forEach((val) {
+              tags.add(val['title']);
+            });
+          }
+
           return InkWell(
             onTap: () {
               print("进详情啦");
@@ -128,7 +227,7 @@ class _TaskPageState extends State<TaskPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              "采购及质保",
+                              "${this._taskList[index]['title']}",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style:
@@ -150,14 +249,16 @@ class _TaskPageState extends State<TaskPage> {
                                   width: ScreenAdapter.width(10),
                                 ),
                                 Text(
-                                  "111901623",
+                                  "#${this._taskList[index]['sn']}",
                                   style: TextStyle(
                                       fontSize: ScreenAdapter.size(22),
                                       color: Colors.black54),
                                 ),
                               ],
                             ),
-                            Label(),
+                            Label(
+                              tags: tags,
+                            ),
                           ],
                         ),
                       ),
@@ -170,21 +271,12 @@ class _TaskPageState extends State<TaskPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              height: ScreenAdapter.height(48),
-                              margin: EdgeInsets.only(right: 10),
-                              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border:
-                                      Border.all(color: Themes.primaryColor),
-                                  color: Color.fromRGBO(250, 250, 250, 1)),
-                              child: Text("待用户确认"),
-                            ),
+                            this._showStatusTags(
+                                this._taskList[index]['status']),
                             Container(
                               margin: EdgeInsets.only(top: 10),
                               child: Text(
-                                "2019-03-29",
+                                "${createdAt}",
                                 style:
                                     TextStyle(fontSize: ScreenAdapter.size(20)),
                               ),
@@ -220,7 +312,9 @@ class _TaskPageState extends State<TaskPage> {
             controller: _initKeywordsController,
             autofocus: false,
             decoration: InputDecoration(
-                hintText: "搜索标题或单号",
+                hintText: (this._initKeywordsController.text == "")
+                    ? "搜索标题或单号"
+                    : this._initKeywordsController.text,
                 contentPadding: EdgeInsets.only(top: 8, left: 8),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,

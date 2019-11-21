@@ -10,24 +10,33 @@ import '../services/ScreenAdapter.dart';
  */
 
 class Label extends StatelessWidget {
-  final List tags;
+  List tags;
   Label({Key key,this.tags}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          height: ScreenAdapter.height(38),
-          margin: EdgeInsets.only(right: 10),
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Themes.primaryColor),
-              color: Color.fromRGBO(250, 250, 250, 1)),
-          child: Text("质检"),
-        ),
-      ],
-    );
+    if (this.tags != null) {
+      return Row(
+        children: this.tags.map((value) {
+          return Container(
+            height: ScreenAdapter.height(40),
+            margin: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Themes.primaryColor),
+                color: Color.fromRGBO(250, 250, 250, 1)),
+            child: Text(
+              "${value}",
+              style: TextStyle(
+                color: Themes.primaryColor,
+              ),
+            ),
+          );
+        }).toList(),
+      );
+    } else {
+      return Text("");
+    }
   }
 }

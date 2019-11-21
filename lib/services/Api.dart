@@ -26,4 +26,12 @@ class Api {
       'api/v1/current_user',
     );
   }
+
+  // 委托单列表
+  static taskList(Map params) async {
+    return await RequestUtil.request(
+      '/api/v1/task/query',
+      params: params
+    );
+  }
 }

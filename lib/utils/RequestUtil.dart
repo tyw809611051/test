@@ -49,7 +49,7 @@ class RequestUtil {
    * @param noTip 通知开关
    * @param auth 权限验证
    */
-  static request(url, {data, params, options, auth=true,noTip = false}) async {
+  static request(url, {data,Map params, options, auth=true,noTip = false}) async {
     // 检查网络
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
