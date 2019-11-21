@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../services/Storage.dart';
 import '../services/CustomNavigatorObserver.dart';
 
@@ -9,19 +10,14 @@ import '../services/CustomNavigatorObserver.dart';
  * @version V1.0.0 
  */
 
-class  Utils {
-  
+class Utils {
   // 网络错误结果数据
-  static Map resultData(error_code,msg,{data=""}) {
-    return {
-      "data": data,
-      "error_code": error_code,
-      "msg": msg
-    };
+  static Map resultData(error_code, msg, {data = ""}) {
+    return {"data": data, "error_code": error_code, "msg": msg};
   }
 
   // 请求基础header头
-  static getRequestHeader() async{
+  static getRequestHeader() async {
     var accessToken = await Storage.getString("access_token");
     if (accessToken == "") {
       // 跳转到登录页
@@ -32,5 +28,19 @@ class  Utils {
       "Access-Token": accessToken,
       "Accept": "application/json",
     };
+  }
+
+  // toast弹框
+  static bool showToast(errCode, msg) {
+    if (errCode != 0) {
+      Fluttertoast.showToast(
+          msg: msg,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+
+      return false;
+    }
+
+    return true;
   }
 }

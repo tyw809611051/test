@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
       providers: [],
       child: MaterialApp(
         navigatorObservers: [CustomNavigatorObserver()],
-        
+
         initialRoute: '/',
         onGenerateRoute: onGenerateRoute,
         debugShowCheckedModeBanner: false,

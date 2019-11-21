@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+import '../utils/RequestUtil.dart';
 /**
  * @description: API接口类
  * @author: YiWen
@@ -9,17 +10,20 @@ import 'dart:convert';
  */
 
 class Api {
-  static String api = "https://api.test.cisslab.com/";
-  static login(url, {options}) async {
-    var api = Api.api+url;
-    print(api);
-    print(options["data"]);
-    var response = await Dio().post(api,data: options["data"]);
-    var res = json.encode(response.data);
-    return res;
-    // if (res['error_code'] != 0) {
-    //   options.reject();
-    // }
-    // options.resolve();
+  // 登录
+  static login(data) async {
+    return await RequestUtil.request(
+      'api/v1/login',
+      data: data,
+      options: Options(method: "POST"),
+      auth: false,
+    );
+  }
+
+  // 获取用户信息
+  static currentUser() async {
+    return await RequestUtil.request(
+      'api/v1/current_user',
+    );
   }
 }

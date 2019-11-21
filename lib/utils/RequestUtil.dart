@@ -25,8 +25,6 @@ class RequestUtil {
   static const NETWORK_RESPONSE_DATA_EXCEPTION = -5; // 响应体异常
   static const NETWORK_OTHER_ERR = -6; //网络错误
 
-  // Dio dio = new Dio();
-
   static RequestUtil getInstance() {
     if (_instance == null) {
       _instance = RequestUtil();
@@ -48,8 +46,10 @@ class RequestUtil {
    * @param data 请求实体
    * @param params url请求参数
    * @param options 配置
+   * @param noTip 通知开关
+   * @param auth 权限验证
    */
-  static request(url, {data, params, options, noTip = false}) async {
+  static request(url, {data, params, options, auth=true,noTip = false}) async {
     // 检查网络
     var connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.none) {
@@ -63,7 +63,7 @@ class RequestUtil {
       baseUrl: Env.API,
       connectTimeout: 5000,
       receiveTimeout: 100000,
-      headers: headers,
+      headers: auth ? headers : {},
       contentType: Headers.jsonContentType,
     ));
 
