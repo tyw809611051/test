@@ -17,7 +17,7 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
 
   // 当前索引页
-  int _currentIndex = 0;
+  int _currentIndex = 1;
   // 页面控制器
   PageController _pageController;
   // 页面列表
@@ -31,23 +31,8 @@ class _TabsState extends State<Tabs> {
   @override
   void initState() {
     super.initState();
-    // _getData();
     this._pageController = new PageController(initialPage: this._currentIndex);
   }
-
-  // _getData() {
-  //   Api.login("api/v1/login", options: {
-  //     "data": {
-  //       "username": "pingtai",
-  //       "password": 123456,
-  //       "type": "account",
-  //     }
-  //   }).then( (res) => {
-  //     print("1111"+res)
-  //   }).catchError( (e) => {
-  //     print(e)
-  //   }) ;
-  // }
 
   @override
   Widget build(BuildContext context) {

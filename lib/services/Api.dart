@@ -49,4 +49,20 @@ class Api {
       params: params
     );
   }
+
+  // 上传文件
+  static upload(data) async {
+    return await RequestUtil.request(
+      'api/v1/attachment/upload',
+      data: data,
+      options: Options(method: "POST"),
+    );
+  }
+
+  // 获取项目
+  static getProject() async {
+    return await RequestUtil.request(
+      'api/v1/project/queryAll',
+    );
+  }
 }

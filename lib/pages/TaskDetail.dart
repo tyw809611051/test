@@ -64,9 +64,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER);
       
-      setState(() {
-        _getTaskDetailData(widget.arguments['sn']);
-      });
+      _getTaskDetailData(widget.arguments['sn']);
+
     } else {
       Utils.showToast(401, "系统正在处理中,请重试!");
     }
