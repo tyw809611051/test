@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../common/Themes.dart';
 import '../services/ScreenAdapter.dart';
 import '../components/BaseForm/BaseButton.dart';
 import '../components/Copyright.dart';
+import '../utils/Utils.dart';
+import '../services/Api.dart';
 
 /**
  * @description: 委托单详情页
@@ -20,6 +23,213 @@ class TaskDetailPage extends StatefulWidget {
 }
 
 class _TaskDetailPageState extends State<TaskDetailPage> {
+  Map _detail = Map();
+
+  @override
+  void initState() {
+    super.initState();
+
+    this._getTaskDetailData(widget.arguments['sn']);
+  }
+
+  // 获取详情数据
+  _getTaskDetailData(sn) async {
+    var res = await Api.taskDetail(sn);
+
+    Utils.showToast(res['error_code'], res['msg']);
+
+    Map detail = res["data"];
+    setState(() {
+      this._detail = detail;
+    });
+  }
+
+  // 确认委托
+  _confirmTask(id) async{
+    if (this._detail.length > 0) {
+      var id = this._detail['id'];
+      Map<String, dynamic> params = {
+        "status": "agree",
+        "contents": {
+          "commit": "",
+          "result": 1,
+        }
+      };
+      var res  = await Api.confirmTask(id, params);
+
+      Utils.showToast(res["error_code"], res["msg"]);
+
+      Fluttertoast.showToast(
+          msg: "处理完成",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
+      
+      setState(() {
+        _getTaskDetailData(widget.arguments['sn']);
+      });
+    } else {
+      Utils.showToast(401, "系统正在处理中,请重试!");
+    }
+  }
+
+  // 根据不同状态展示不同标签
+  Widget _showStatusTags(Map status) {
+    String text;
+    Color color;
+    if (this._detail.length > 0) {
+      switch (status['value']) {
+        case 6:
+          color = Colors.blue;
+          break;
+        case 9:
+          color = Colors.green;
+          break;
+        default:
+          color = Colors.black;
+          break;
+      }
+      text = status['text'];
+
+      return Container(
+        height: ScreenAdapter.height(48),
+        margin: EdgeInsets.only(right: 10),
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: color),
+            color: Color.fromRGBO(250, 250, 250, 0.9)),
+        child: Text(
+          "${text}",
+          style: TextStyle(color: color),
+        ),
+      );
+    } else {
+      return Text("");
+    }
+  }
+
+  // 遍历服务项
+  Widget _showServiceItem(servicesId) {
+    String title = "";
+    String standard_info = "";
+    String commit = "";
+    List service = this._detail['services'] ?? [];
+    bool res = service.any((value) => value['id'] == servicesId);
+    if (!res) {
+      return Text("");
+    }
+
+    String servId = servicesId.toString();
+    title = servicesId == 1 ? '质检服务' : '采购服务';
+    if (this._detail['configs']['${servId}'] != null) {
+      if (this._detail['configs']['${servId}'].containsKey('standard_info')) {
+        var code =
+            this._detail['configs']['${servId}']['standard_info']['code'] ?? "";
+        var name =
+            this._detail['configs']['${servId}']['standard_info']['name'] ?? "";
+        standard_info = code != null ? "(${code})${name}" : "${name}";
+      }
+
+      commit = this._detail['configs']['${servId}']['commit'] ?? "";
+    }
+
+    return Container(
+        color: Colors.white,
+        height: ScreenAdapter.height(150),
+        child: Padding(
+          padding: EdgeInsets.only(left: 30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: ScreenAdapter.height(48),
+                margin: EdgeInsets.only(top: 3),
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(color: Themes.primaryColor),
+                    color: Color.fromRGBO(250, 250, 250, 1)),
+                child: Text("${title}"),
+              ),
+              Text(
+                "依据标准: ${standard_info}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                "备注: ${commit}",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+        ));
+  }
+
+  // 展示产品
+  Widget _showMaterial() {
+    if (this._detail.length > 0 && this._detail['material'].length > 0) {
+      List material = this._detail['material'];
+      return Wrap(
+        runSpacing: 2,
+        children: material.map((value) {
+          var model = value['product']['model'] ?? "";
+          var name = value['product']['name'] ?? "";
+          
+          return Container(
+            color: Colors.white,
+            height: ScreenAdapter.height(150),
+            width: ScreenAdapter.width(750),
+            padding: EdgeInsets.only(left: 30),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "${model}",
+                        style: TextStyle(fontSize: ScreenAdapter.size(28)),
+                      ),
+                      Text(
+                        "${name}",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: Colors.black45,
+                            fontSize: ScreenAdapter.size(24)),
+                      ),
+                      Text(
+                        "#${value['sn']}",
+                        style: TextStyle(
+                            color: Colors.black45,
+                            fontSize: ScreenAdapter.size(24)),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(
+                    child: Text(
+                      "X${value['qty']}",
+                      style: TextStyle(color: Themes.primaryColor),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        }).toList(),
+      );
+    } else {
+      return Text("");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +281,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
-                        "#111901623",
+                        (this._detail.length > 0)
+                            ? "${this._detail['sn']}"
+                            : "#---------",
                         style: TextStyle(color: Colors.black54),
                       ),
                     ),
@@ -80,16 +292,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: EdgeInsets.only(right: 10),
-                      child: Container(
-                        height: ScreenAdapter.height(48),
-                        margin: EdgeInsets.only(right: 10),
-                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Themes.primaryColor),
-                            color: Color.fromRGBO(250, 250, 250, 1)),
-                        child: Text("待用户确认"),
-                      ),
+                      child: this._showStatusTags(this._detail['status']),
                     ),
                   ),
                 ],
@@ -121,7 +324,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     flex: 4,
                     child: Center(
                       child: Text(
-                        "采购及质保",
+                        (this._detail.length > 0)
+                            ? "${this._detail['title']}"
+                            : "---",
                         style: TextStyle(fontSize: ScreenAdapter.size(28)),
                       ),
                     ),
@@ -155,41 +360,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     flex: 4,
                     child: Center(
                       child: Text(
-                        "小卫星项目",
-                        style: TextStyle(fontSize: ScreenAdapter.size(28)),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Divider(
-              height: 2,
-            ),
-            // 委托人
-            Container(
-              color: Colors.white,
-              height: ScreenAdapter.height(100),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 30),
-                      child: Text(
-                        "委托人",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: ScreenAdapter.size(28)),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: Center(
-                      child: Text(
-                        "YiWen",
+                        (this._detail.length > 0)
+                            ? "${this._detail['project']['name']}"
+                            : "---",
                         style: TextStyle(fontSize: ScreenAdapter.size(28)),
                       ),
                     ),
@@ -223,7 +396,9 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                     flex: 4,
                     child: Center(
                       child: Text(
-                        "2019-03-29 13:57:51",
+                        (this._detail.length > 0)
+                            ? "${this._detail['created_at']}"
+                            : "---",
                         style: TextStyle(fontSize: ScreenAdapter.size(28)),
                       ),
                     ),
@@ -259,7 +434,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       Container(
                         padding: EdgeInsets.only(left: 10),
                         child: Text(
-                          "需求描述",
+                          (this._detail.length > 0 &&
+                                  this._detail['content'] != null)
+                              ? "${this._detail['content']}"
+                              : "",
                           maxLines: 5,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: ScreenAdapter.size(24)),
@@ -292,84 +470,29 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
-                      "基础信息",
+                      "服务项",
                       style: TextStyle(fontSize: ScreenAdapter.size(32)),
                     ),
                   ),
                 ],
               ),
             ),
-            // 质检服务
-            Container(
-              color: Colors.white,
-              height: ScreenAdapter.height(150),
-              child: Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      height: ScreenAdapter.height(48),
-                      margin: EdgeInsets.only(top: 3),
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Themes.primaryColor),
-                          color: Color.fromRGBO(250, 250, 250, 1)),
-                      child: Text("待用户确认"),
-                    ),
-                    Text(
-                      "依据标准:",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      "备注:",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              )
-            ),
+
             Divider(
               height: 2,
             ),
-            // 采购服务
-            Container(
-              color: Colors.white,
-              height: ScreenAdapter.height(150),
-              child: Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      height: ScreenAdapter.height(48),
-                      margin: EdgeInsets.only(top: 3),
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Themes.primaryColor),
-                          color: Color.fromRGBO(250, 250, 250, 1)),
-                      child: Text("待用户确认"),
-                    ),
-                    Text(
-                      "依据标准:",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      "备注:",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              )
-            ),
+            (this._detail.length > 0 && this._detail['services'].length > 0)
+                ? this._showServiceItem(1)
+                : Text(""),
+            (this._detail.length > 0 && this._detail['services'].length >= 2)
+                ? Divider(
+                    height: 2,
+                  )
+                : Text(""),
+            (this._detail.length > 0 && this._detail['services'].length > 0)
+                ? this._showServiceItem(4)
+                : Text(""),
+
             Container(
               width: double.infinity,
               height: 20,
@@ -399,58 +522,20 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 ],
               ),
             ),
-            Container(
-              color: Colors.white,
-              height: ScreenAdapter.height(150),
-              padding: EdgeInsets.only(left: 30),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("REF3033AIDBZT",style: TextStyle(
-                          fontSize: ScreenAdapter.size(28)
-                        ),),
-                        Text(
-                          "XXXXXXXXXXXXXXXXXXXXX",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: Colors.black45,
-                          fontSize: ScreenAdapter.size(24)
-                        ),),
-                        Text("#120200006",style: TextStyle(
-                          color: Colors.black45,
-                          fontSize: ScreenAdapter.size(24)
-                        ),),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: Text("X1",style: TextStyle(
-                        color: Themes.primaryColor
-                      ),),
-                    ),
-                  )
-                ],
-              ),
-            ),
+
+            this._showMaterial(),
             Container(
               width: double.infinity,
               height: 30,
               color: Colors.black12,
             ),
-            BaseButton(
+            (this._detail.length > 0 && this._detail['status']['value'] == 6) ? BaseButton(
               text: "确认委托",
               color: Themes.btnPrimaryColor,
-
+            ) : Text(""),
+            SizedBox(
+              height: 20,
             ),
-            SizedBox(height: 20,),
             Copyright()
           ],
         ),

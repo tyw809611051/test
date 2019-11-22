@@ -115,7 +115,7 @@ class RequestUtil {
 
       if (Env.DEBUG) {
         print('响应体异常: ' + e.toString());
-        print('响应体异常 url: ' + response.realUri.toString());
+        print('响应体异常 url: ' + url.toString());
       }
 
       return Utils.resultData(errorResponse.statusCode, "服务器异常,请稍后再试!",

@@ -30,7 +30,22 @@ class Api {
   // 委托单列表
   static taskList(Map params) async {
     return await RequestUtil.request(
-      '/api/v1/task/query',
+      'api/v1/task/query',
+      params: params
+    );
+  }
+
+  // 详情数据
+  static taskDetail(sn) async {
+    return await RequestUtil.request(
+      'api/v1/task/detail/${sn}'
+    );
+  }
+
+  // 确认委托
+  static confirmTask(id,params) async {
+    return await RequestUtil.request(
+      'api/v1/task/status/${id}',
       params: params
     );
   }
