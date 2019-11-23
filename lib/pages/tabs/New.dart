@@ -3,12 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../components/BaseForm/BaseText.dart';
 import '../../services/ScreenAdapter.dart';
 import '../../components/BaseForm/BaseButton.dart';
 import '../../common/Themes.dart';
 import '../../services/Api.dart';
 import '../../utils/Utils.dart';
+import '../Tabs.dart';
 
 /**
  * @description: 创建委托单页
@@ -32,6 +32,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   String title;
   // 项目ID
   int projectId;
+  String projectText;
   // 增值服务
   List valueServices = List();
   // 委托类型
@@ -108,7 +109,63 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   }
 
   // 创建委托单
-  _createTask() async {}
+  _createTask() async {
+    if (this.title == null) {
+      Utils.showToast(401, "标题不能为空");
+      return false;
+    }
+    if (this.projectId == null) {
+      Utils.showToast(401, "项目不能为空");
+      return false;
+    }
+    if (this.content == null) {
+      Utils.showToast(401, "需求描述不能为空");
+      return false;
+    }
+
+    Map data = Map();
+    //处理文件
+    if (this.attachments.length > 0) {
+      data['attachments'] = List();
+      this.attachments.forEach((value) {
+        data['attachments'].add(value['id']);
+      });
+    }
+
+    // 增值服务
+    if (this.valueServices.length > 0) {
+      data['value_services'] = List();
+      data['value_services'].addAll(this.valueServices);
+    }
+
+    // 服务
+    if (this.services.length > 0) {
+      data['services'] = List();
+      data['services'].addAll(this.services);
+    }
+
+    data['title'] = this.title;
+    data['project'] = this.projectId;
+    data['content'] = this.content;
+
+    var res = await Api.createTask(data);
+
+    bool codeRes = Utils.showToast(res['error_code'], res['msg']);
+    if (!codeRes) {
+      return false;
+    }
+
+    Fluttertoast.showToast(
+        msg: res['msg'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER);
+
+    Utils.startTimeout(() {
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => new Tabs()),
+          (route) => route == null);
+    },2000);
+  }
 
   // 展示项目
   _showProjectItem() {
@@ -136,7 +193,9 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                       onTap: () {
                         setState(() {
                           this.projectId = this._project[index]['key'];
+                          this.projectText = this._project[index]['text'];
                         });
+                        Navigator.of(context).pop();
                       },
                       child: Column(
                         children: <Widget>[
@@ -305,7 +364,9 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                           Container(
                             margin: EdgeInsets.only(left: 10),
                             child: Text(
-                              "请选择项目",
+                              (this.projectText == null)
+                                  ? "请选择项目"
+                                  : this.projectText,
                               style: TextStyle(
                                 fontSize: ScreenAdapter.size(24),
                               ),

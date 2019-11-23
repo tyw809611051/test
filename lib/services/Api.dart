@@ -65,4 +65,13 @@ class Api {
       'api/v1/project/queryAll',
     );
   }
+
+  // 创建委托单
+  static createTask(data) async {
+    return await RequestUtil.request(
+      'api/v1/task/create',
+      data: data,
+      options: Options(method: "POST"),
+    );
+  }
 }

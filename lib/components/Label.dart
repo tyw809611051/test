@@ -30,6 +30,7 @@ class Label extends StatelessWidget {
               "${value}",
               style: TextStyle(
                 color: Themes.primaryColor,
+                fontSize: ScreenAdapter.size(24)
               ),
             ),
           );

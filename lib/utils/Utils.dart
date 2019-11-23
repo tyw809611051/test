@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../services/Storage.dart';
 import '../services/CustomNavigatorObserver.dart';
@@ -42,5 +42,11 @@ class Utils {
     }
 
     return true;
+  }
+
+  // 延迟执行
+  static startTimeout(callback,[int milliseconds]) {
+    var duration = milliseconds == null ? Duration(seconds: 3) : Duration(milliseconds: 1 * milliseconds);
+    return new Timer(duration, callback);
   }
 }
