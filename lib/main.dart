@@ -20,9 +20,9 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [],
       child: MaterialApp(
-        navigatorObservers: [CustomNavigatorObserver()],
+        navigatorObservers: [CustomNavigatorObserver.getInstance()],
 
-        initialRoute: '/',
+        initialRoute: '/login',
         onGenerateRoute: onGenerateRoute,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

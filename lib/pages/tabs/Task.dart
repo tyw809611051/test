@@ -47,7 +47,7 @@ class _TaskPageState extends State<TaskPage> {
 
     _getTaskListData();
 
-    // 监听滚动条滚动事件
+    // // 监听滚动条滚动事件
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >
           _scrollController.position.maxScrollExtent - 20) {
@@ -75,8 +75,11 @@ class _TaskPageState extends State<TaskPage> {
     // 请求数据
     var res = await Api.taskList(params);
 
-    Utils.showToast(res["error_code"], res["msg"]);
-
+    bool codeRes = Utils.showToast(res["error_code"], res["msg"]);
+    if (!codeRes) {
+      return false;
+    }
+    
     Map taskList = res["data"];
     Map pagination = taskList["pagination"];
     bool hasMore = true;

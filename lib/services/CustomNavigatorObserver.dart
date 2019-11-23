@@ -7,13 +7,14 @@ import 'package:flutter/material.dart';
  * @version V1.0.0 
  */
 
-class CustomNavigatorObserver extends NavigatorObserver{
- static CustomNavigatorObserver _instance;
- 
- static CustomNavigatorObserver getInstance() {
- if (_instance == null) {
-  _instance = CustomNavigatorObserver();
- }
- return _instance;
- }
+class CustomNavigatorObserver extends NavigatorObserver {
+  static CustomNavigatorObserver _instance;
+
+  static CustomNavigatorObserver getInstance() {
+    if (_instance == null) {
+      _instance = CustomNavigatorObserver();
+    }
+    return _instance;
+  }
+
 }

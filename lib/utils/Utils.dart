@@ -19,9 +19,12 @@ class Utils {
   // 请求基础header头
   static getRequestHeader() async {
     var accessToken = await Storage.getString("access_token");
-    if (accessToken == "") {
+    if (accessToken == "" || accessToken == null) {
       // 跳转到登录页
-      CustomNavigatorObserver.getInstance().navigator.pushNamed("/login");
+      CustomNavigatorObserver.getInstance()
+          .navigator
+          .pushReplacementNamed('/login');
+      return {};
     }
 
     return {
@@ -33,10 +36,12 @@ class Utils {
   // toast弹框
   static bool showToast(errCode, msg) {
     if (errCode != 0) {
-      Fluttertoast.showToast(
-          msg: msg,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER);
+      if (errCode != 400) {
+        Fluttertoast.showToast(
+            msg: msg,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER);
+      }
 
       return false;
     }
@@ -45,8 +50,10 @@ class Utils {
   }
 
   // 延迟执行
-  static startTimeout(callback,[int milliseconds]) {
-    var duration = milliseconds == null ? Duration(seconds: 3) : Duration(milliseconds: 1 * milliseconds);
+  static startTimeout(callback, [int milliseconds]) {
+    var duration = milliseconds == null
+        ? Duration(seconds: 3)
+        : Duration(milliseconds: 1 * milliseconds);
     return new Timer(duration, callback);
   }
 }

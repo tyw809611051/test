@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../services/ScreenAdapter.dart';
+import '../../services/CustomNavigatorObserver.dart';
 import '../../components/BaseForm/BaseButton.dart';
 import '../../common/Themes.dart';
 import '../../services/Api.dart';
@@ -49,12 +51,21 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
       _inspectedService = false,
       _factoryService = false,
       _purchaseService = false;
+  Timer _timer;
 
   @override
   void initState() {
     super.initState();
     // 请求项目数据
     _getProjectData();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (this._timer != null) {
+      this._timer.cancel();
+    }
   }
 
   // 请求项目数据
@@ -160,7 +171,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER);
 
-    Utils.startTimeout(() {
+    this._timer = Utils.startTimeout(() {
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => new Tabs()),
           (route) => route == null);

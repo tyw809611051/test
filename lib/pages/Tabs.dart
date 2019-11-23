@@ -17,7 +17,7 @@ class Tabs extends StatefulWidget {
 class _TabsState extends State<Tabs> {
 
   // 当前索引页
-  int _currentIndex = 1;
+  int _currentIndex = 0;
   // 页面控制器
   PageController _pageController;
   // 页面列表

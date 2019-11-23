@@ -74,4 +74,22 @@ class Api {
       options: Options(method: "POST"),
     );
   }
+
+  // 发送短信
+  static sendVerCode(data) async {
+    return await RequestUtil.request(
+      'api/v1/register/captcha',
+      data:data,
+      options: Options(method: "POST"),
+    );
+  }
+
+  // 注册
+  static register(data) async {
+    return await RequestUtil.request(
+      'api/v1/register',
+      data: data,
+      options: Options(method: "POST"),
+    );
+  }
 }

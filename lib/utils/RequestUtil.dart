@@ -57,7 +57,16 @@ class RequestUtil {
           data: errorHandleFunction(NETWORK_ERROR, "网络请求失败,请检查您的网络设置", noTip));
     }
     // 获取header头
-    Map headers = await Utils.getRequestHeader();
+    Map headers = Map();
+    if (auth) {
+      headers = await Utils.getRequestHeader();
+      if (headers.length == 0) {
+        return Utils.resultData(400, "请登录",
+          data: errorHandleFunction(
+              400, "请登录", noTip));
+      }
+    }
+    
     // dio实例
     Dio dio = Dio(BaseOptions(
       baseUrl: Env.API,

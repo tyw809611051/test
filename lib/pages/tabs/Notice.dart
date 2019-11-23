@@ -16,7 +16,10 @@ class NoticePage extends StatefulWidget {
   _NoticePageState createState() => _NoticePageState();
 }
 
-class _NoticePageState extends State<NoticePage> {
+class _NoticePageState extends State<NoticePage> with AutomaticKeepAliveClientMixin {
+  
+  @override
+  bool get wantKeepAlive => true; // 保持页面缓存
   // 二级导航数据
   List _subHeaderList = [
     {

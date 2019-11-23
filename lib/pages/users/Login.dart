@@ -195,16 +195,15 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.all(30),
               child: Stack(
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("忘记密码"),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Text("忘记密码"),
+                  // ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: InkWell(
                       onTap: () {
-                        //  Navigator.pushNamed(context, '/registerFirst');
-                        print("点击企业注册");
+                         Navigator.pushNamed(context, '/register');
                       },
                       child: Text("企业注册"),
                     ),
