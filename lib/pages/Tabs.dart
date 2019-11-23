@@ -36,8 +36,7 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    // 屏幕适配
-    ScreenAdapter.init(context);
+    
 
     return Scaffold(
       // appBar: AppBar(

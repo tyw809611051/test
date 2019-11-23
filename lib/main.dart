@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'routes/router.dart';
 import './common/Themes.dart';
 import './services/CustomNavigatorObserver.dart';
+import './pages/Launch.dart';
 
 void main() => runApp(MyApp());
 
@@ -22,8 +23,9 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         navigatorObservers: [CustomNavigatorObserver.getInstance()],
 
-        initialRoute: '/login',
+        initialRoute: '/',
         onGenerateRoute: onGenerateRoute,
+        home: LaunchPage(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Themes.primaryColor
