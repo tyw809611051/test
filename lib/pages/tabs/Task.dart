@@ -33,6 +33,8 @@ class _TaskPageState extends State<TaskPage> {
   int _selectHeader = 1;
   // 委托单数据
   List _taskList = [];
+  // 初始化是否完成
+  bool _isLoading = false;
 
   // 二级导航数据
   List _subHeaderList = [
@@ -62,6 +64,7 @@ class _TaskPageState extends State<TaskPage> {
   _getTaskListData() async {
     setState(() {
       this._flag = false;
+      this._isLoading = true;
     });
 
     Map<String, dynamic> params = Map();
@@ -79,7 +82,7 @@ class _TaskPageState extends State<TaskPage> {
     if (!codeRes) {
       return false;
     }
-    
+
     Map taskList = res["data"];
     Map pagination = taskList["pagination"];
     bool hasMore = true;
@@ -93,6 +96,7 @@ class _TaskPageState extends State<TaskPage> {
       this._page++;
       this._flag = true;
       this._hasMore = hasMore;
+      this._isLoading = false;
     });
   }
 
@@ -232,8 +236,8 @@ class _TaskPageState extends State<TaskPage> {
             return InkWell(
               onTap: () {
                 print("进详情啦");
-                Navigator.pushNamed(context, '/taskDetail',arguments: {
-                  "sn":this._taskList[index]['sn'],
+                Navigator.pushNamed(context, '/taskDetail', arguments: {
+                  "sn": this._taskList[index]['sn'],
                 });
               },
               child: Column(
@@ -320,7 +324,23 @@ class _TaskPageState extends State<TaskPage> {
         ),
       );
     } else {
-      return LoadingWidget();
+      if (this._isLoading) {
+        return LoadingWidget();
+      }
+      return Container(
+        padding: EdgeInsets.only(left: 15, right: 15),
+        margin: EdgeInsets.only(top: ScreenAdapter.height(150)),
+        child: ListView(
+          children: <Widget>[
+            Center(
+              child: Text(
+                "-------------我是有底线的-------------",
+                style: TextStyle(color: Colors.black54, letterSpacing: 3.0),
+              ),
+            ),
+          ],
+        ),
+      );
     }
   }
 
