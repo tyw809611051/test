@@ -36,8 +36,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   _getTaskDetailData(sn) async {
     var res = await Api.taskDetail(sn);
 
-    Utils.showToast(res['error_code'], res['msg']);
-
+    bool codeRes = Utils.showToast(res['error_code'], res['msg']);
+    if (!codeRes) {
+      return false;
+    }
     Map detail = res["data"];
     setState(() {
       this._detail = detail;
@@ -45,7 +47,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   }
 
   // 确认委托
-  _confirmTask(id) async{
+  _confirmTask() async {
     if (this._detail.length > 0) {
       var id = this._detail['id'];
       Map<String, dynamic> params = {
@@ -55,19 +57,24 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           "result": 1,
         }
       };
-      var res  = await Api.confirmTask(id, params);
+      var res = await Api.confirmTask(id, params);
 
-      Utils.showToast(res["error_code"], res["msg"]);
+      bool codeRes = Utils.showToast(res["error_code"], res["msg"]);
+      if (!codeRes) {
+        return false;
+      }
 
       Fluttertoast.showToast(
           msg: "处理完成",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER);
-      
-      _getTaskDetailData(widget.arguments['sn']);
 
+      _getTaskDetailData(widget.arguments['sn']);
     } else {
-      Utils.showToast(401, "系统正在处理中,请重试!");
+      bool codeRes = Utils.showToast(401, "系统正在处理中,请稍候!");
+      if (!codeRes) {
+        return false;
+      }
     }
   }
 
@@ -92,7 +99,11 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       return Container(
         height: ScreenAdapter.height(48),
         margin: EdgeInsets.only(right: 10),
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        padding: EdgeInsets.fromLTRB(
+            ScreenAdapter.width(20),
+            ScreenAdapter.height(4),
+            ScreenAdapter.height(20),
+            ScreenAdapter.height(4)),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(color: color),
@@ -115,11 +126,24 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     List service = this._detail['services'] ?? [];
     bool res = service.any((value) => value['id'] == servicesId);
     if (!res) {
-      return Text("");
+      return Container();
     }
 
     String servId = servicesId.toString();
-    title = servicesId == 1 ? '质检服务' : '采购服务';
+    switch (servicesId) {
+      case 1:
+        title = '质检服务';
+        break;
+      case 3:
+        title = '下厂服务';
+        break;
+      case 4:
+        title = '质检服务';
+        break;
+      default:
+        title = '';
+        break;
+    }
     if (this._detail['configs']['${servId}'] != null) {
       if (this._detail['configs']['${servId}'].containsKey('standard_info')) {
         var code =
@@ -133,8 +157,16 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     }
 
     return Container(
-        color: Colors.white,
         height: ScreenAdapter.height(150),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              width: 1,
+              color: Colors.black12
+            )
+          )
+        ),
         child: Padding(
           padding: EdgeInsets.only(left: 30),
           child: Column(
@@ -144,12 +176,19 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               Container(
                 height: ScreenAdapter.height(48),
                 margin: EdgeInsets.only(top: 3),
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                padding: EdgeInsets.fromLTRB(
+                    ScreenAdapter.width(20),
+                    ScreenAdapter.height(5),
+                    ScreenAdapter.height(20),
+                    ScreenAdapter.height(5)),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(color: Themes.primaryColor),
                     color: Color.fromRGBO(250, 250, 250, 1)),
-                child: Text("${title}"),
+                child: Text(
+                  "${title}",
+                  style: TextStyle(color: Themes.primaryColor),
+                ),
               ),
               Text(
                 "依据标准: ${standard_info}",
@@ -175,7 +214,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
         children: material.map((value) {
           var model = value['product']['model'] ?? "";
           var name = value['product']['name'] ?? "";
-          
+
           return Container(
             color: Colors.white,
             height: ScreenAdapter.height(150),
@@ -233,9 +272,12 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text("委托单详情", style: TextStyle(color: Colors.white)),
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
         ),
+        centerTitle: true,
+        title: Text("委托单详情", style: TextStyle(color: Colors.white)),
       ),
       body: Container(
         child: ListView(
@@ -281,7 +323,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                       padding: EdgeInsets.only(left: 10),
                       child: Text(
                         (this._detail.length > 0)
-                            ? "${this._detail['sn']}"
+                            ? "#${this._detail['sn']}"
                             : "#---------",
                         style: TextStyle(color: Colors.black54),
                       ),
@@ -477,17 +519,22 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               ),
             ),
 
-            Divider(
-              height: 2,
-            ),
             (this._detail.length > 0 && this._detail['services'].length > 0)
                 ? this._showServiceItem(1)
                 : Text(""),
-            (this._detail.length > 0 && this._detail['services'].length >= 2)
-                ? Divider(
-                    height: 2,
-                  )
+            // (this._detail.length > 0 && this._detail['services'].length >= 2)
+            //     ? Divider(
+            //         height: 2,
+            //       )
+            //     : Text(""),
+            (this._detail.length > 0 && this._detail['services'].length > 0)
+                ? this._showServiceItem(3)
                 : Text(""),
+            // (this._detail.length > 0 && this._detail['services'].length >= 3)
+            //     ? Divider(
+            //         height: 2,
+            //       )
+            //     : Text(""),
             (this._detail.length > 0 && this._detail['services'].length > 0)
                 ? this._showServiceItem(4)
                 : Text(""),
@@ -528,10 +575,13 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               height: 30,
               color: Colors.black12,
             ),
-            (this._detail.length > 0 && this._detail['status']['value'] == 6) ? BaseButton(
-              text: "确认委托",
-              color: Themes.btnPrimaryColor,
-            ) : Text(""),
+            (this._detail.length > 0 && this._detail['status']['value'] == 6)
+                ? BaseButton(
+                    text: "确认委托",
+                    color: Themes.btnPrimaryColor,
+                    cb: this._confirmTask,
+                  )
+                : Text(""),
             SizedBox(
               height: 20,
             ),

@@ -21,10 +21,14 @@ class Label extends StatelessWidget {
           return Container(
             height: ScreenAdapter.height(40),
             margin: EdgeInsets.only(right: 10),
-            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            padding: EdgeInsets.fromLTRB(
+              ScreenAdapter.width(20), ScreenAdapter.height(4), 
+              ScreenAdapter.height(20), ScreenAdapter.height(4)
+              ),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Themes.primaryColor),
+                
                 color: Color.fromRGBO(250, 250, 250, 1)),
             child: Text(
               "${value}",

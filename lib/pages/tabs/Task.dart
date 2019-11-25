@@ -106,7 +106,10 @@ class _TaskPageState extends State<TaskPage> {
       return (index == this._taskList.length - 1) ? LoadingWidget() : Text("");
     } else {
       return (index == this._taskList.length - 1)
-          ? Text("---我的有底线的---")
+          ? Text(
+              "---我的有底线的---",
+              style: TextStyle(color: Colors.black54, letterSpacing: 2.0),
+            )
           : Text("");
     }
   }
@@ -147,7 +150,11 @@ class _TaskPageState extends State<TaskPage> {
     return Container(
       height: ScreenAdapter.height(48),
       margin: EdgeInsets.only(right: 10),
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      padding: EdgeInsets.fromLTRB(
+          ScreenAdapter.width(20),
+          ScreenAdapter.height(5),
+          ScreenAdapter.height(20),
+          ScreenAdapter.height(5)),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(color: color),
@@ -216,7 +223,7 @@ class _TaskPageState extends State<TaskPage> {
   Widget _taskListWidget() {
     if (this._taskList.length > 0) {
       return Container(
-        padding: EdgeInsets.only(left: 15, right: 15),
+        // padding: EdgeInsets.only(left: 15, right: 15),
         margin: EdgeInsets.only(top: ScreenAdapter.height(80)),
         child: ListView.builder(
           controller: _scrollController,
@@ -234,8 +241,7 @@ class _TaskPageState extends State<TaskPage> {
             }
 
             return InkWell(
-              onTap: () {
-                print("进详情啦");
+              onTap: () { 
                 Navigator.pushNamed(context, '/taskDetail', arguments: {
                   "sn": this._taskList[index]['sn'],
                 });
@@ -247,7 +253,7 @@ class _TaskPageState extends State<TaskPage> {
                       Expanded(
                         flex: 5,
                         child: Container(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(left: ScreenAdapter.width(30)),
                           height: ScreenAdapter.height(180),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -315,7 +321,7 @@ class _TaskPageState extends State<TaskPage> {
                     ],
                   ),
                   Divider(
-                    height: 10,
+                    height: ScreenAdapter.height(10),
                   ),
                 ],
               ),
@@ -335,7 +341,7 @@ class _TaskPageState extends State<TaskPage> {
             Center(
               child: Text(
                 "-------------我是有底线的-------------",
-                style: TextStyle(color: Colors.black54, letterSpacing: 3.0),
+                style: TextStyle(color: Colors.black54, letterSpacing: 2.0),
               ),
             ),
           ],
@@ -361,7 +367,9 @@ class _TaskPageState extends State<TaskPage> {
                 hintText: (this._initKeywordsController.text == "")
                     ? "搜索标题"
                     : this._initKeywordsController.text,
-                contentPadding: EdgeInsets.only(top: 8, left: 8),
+                contentPadding: EdgeInsets.only(
+                    top: ScreenAdapter.height(30),
+                    left: ScreenAdapter.width(30)),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(30),

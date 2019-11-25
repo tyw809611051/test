@@ -43,10 +43,11 @@ class Api {
   }
 
   // 确认委托
-  static confirmTask(id,params) async {
+  static confirmTask(id,data) async {
     return await RequestUtil.request(
       'api/v1/task/status/${id}',
-      params: params
+      data: data,
+      options: Options(method: "PUT"),
     );
   }
 
@@ -81,6 +82,7 @@ class Api {
       'api/v1/register/captcha',
       data:data,
       options: Options(method: "POST"),
+      auth: false,
     );
   }
 
@@ -90,6 +92,7 @@ class Api {
       'api/v1/register',
       data: data,
       options: Options(method: "POST"),
+      auth: false,
     );
   }
 }

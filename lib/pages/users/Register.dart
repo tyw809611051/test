@@ -88,6 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
     var res = await Api.sendVerCode({
       "phone": this._phone,
     });
+    print(res);
     bool codeRes = Utils.showToast(res['error_code'], res['msg']);
 
     if (!codeRes) {
@@ -182,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         centerTitle: true,
         // automaticallyImplyLeading: false,
-        title: Text("通知", style: TextStyle(color: Colors.white)),
+        title: Text("企业注册", style: TextStyle(color: Colors.white)),
       ),
       body: Container(
         child: ListView(
@@ -462,6 +463,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           constraints:
                               BoxConstraints(maxHeight: 35, maxWidth: 200),
                           child: TextField(
+                            obscureText: true,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 4.0, horizontal: 4.0),

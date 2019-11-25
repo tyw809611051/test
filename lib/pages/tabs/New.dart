@@ -28,7 +28,7 @@ class NewPage extends StatefulWidget {
 
 class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
   @override
-  bool get wantKeepAlive => true; // 保持页面缓存
+  bool get wantKeepAlive => false; // 保持页面缓存
 
   // 标题
   String title;
@@ -175,7 +175,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
       Navigator.of(context).pushAndRemoveUntil(
           new MaterialPageRoute(builder: (context) => new Tabs()),
           (route) => route == null);
-    },2000);
+    }, 2000);
   }
 
   // 展示项目
@@ -185,7 +185,8 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
       builder: (BuildContext context) {
         if (this._project.length <= 0) {
           return Container(
-            child: Text("数据异常,请重试!"),
+            height: ScreenAdapter.height(50),
+            child: Text("无项目数据!"),
           );
         }
         return StatefulBuilder(builder: (BuildContext context, setBottomState) {
@@ -287,53 +288,56 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
         ),
       ),
       body: Container(
-        // padding: EdgeInsets.all(ScreenAdapter.height(10)),
         child: ListView(
           children: <Widget>[
             // 标题
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(left: 15),
-                  child: Icon(
-                    Icons.fiber_manual_record,
-                    size: 6,
-                    color: Colors.red,
+            Container(
+              height: ScreenAdapter.height(100),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left: 15),
+                    child: Icon(
+                      Icons.fiber_manual_record,
+                      size: 6,
+                      color: Colors.red,
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 4),
-                    child: Text(
-                      "标题",
-                      style: TextStyle(
-                        fontSize: ScreenAdapter.size(24),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 4),
+                      child: Text(
+                        "标题",
+                        style: TextStyle(
+                          fontSize: ScreenAdapter.size(24),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 6,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 35, maxWidth: 200),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 4.0),
-                        hintText: '一句话描述需求',
-                        border: OutlineInputBorder(borderSide: BorderSide.none),
+                  Expanded(
+                    flex: 6,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 35, maxWidth: 200),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 4.0),
+                          hintText: '一句话描述需求',
+                          border:
+                              OutlineInputBorder(borderSide: BorderSide.none),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            this.title = value;
+                          });
+                        },
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          this.title = value;
-                        });
-                      },
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Divider(),
             // 项目
@@ -397,7 +401,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
             Divider(),
             // 增值服务
             Container(
-              height: ScreenAdapter.height(95),
+              height: ScreenAdapter.height(100),
               padding: EdgeInsets.only(left: 5),
               child: Row(
                 children: <Widget>[
@@ -434,7 +438,6 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                                           this._expedited = bol;
                                         });
                                       }
-                                      print(valueServices);
                                     },
                                   ),
                                 ),
@@ -474,7 +477,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
             Divider(),
             // 委托类型
             Container(
-              height: ScreenAdapter.height(95),
+              height: ScreenAdapter.height(100),
               padding: EdgeInsets.only(left: 5),
               child: Row(
                 children: <Widget>[
@@ -658,7 +661,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
                             Container(
-                              width: ScreenAdapter.width(120),
+                              width: ScreenAdapter.width(150),
                               height: ScreenAdapter.height(60),
                               margin: EdgeInsets.only(right: 5),
                               padding: EdgeInsets.only(top: 5),
@@ -667,7 +670,6 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                                 textColor: Colors.white,
                                 color: Themes.primaryColor,
                                 onPressed: () {
-                                  print("上传");
                                   _selectFile();
                                 },
                                 child: Text("上传"),

@@ -6,6 +6,7 @@ import '../../common/Themes.dart';
 import '../../services/Api.dart';
 import '../../components/Copyright.dart';
 import '../../services/Storage.dart';
+import '../../utils/Utils.dart';
 import '../Tabs.dart';
 
 /**
@@ -65,15 +66,11 @@ class _LoginPageState extends State<LoginPage> {
         "type": "account",
     });
 
-    if (res["error_code"] != 0) {
-      Fluttertoast.showToast(
-        msg: res["msg"],
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER
-      );
-
-      return null;
+    bool codeRes = Utils.showToast(res["error_code"], res["msg"]);
+    if (!codeRes) {
+      return false;
     }
+
     Map userInfo = res["data"];
 
     String token = userInfo["token"];
@@ -185,7 +182,6 @@ class _LoginPageState extends State<LoginPage> {
                       setState(() {
                         this._password = value;
                       });
-                      print(value);
                     },
                   ),
                 ),

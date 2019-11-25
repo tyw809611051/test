@@ -39,9 +39,6 @@ class _TabsState extends State<Tabs> {
     
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("haha"),
-      // ),
       body: PageView(
         controller: _pageController,
         children: this._pageList,
