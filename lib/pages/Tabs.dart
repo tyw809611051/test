@@ -36,7 +36,7 @@ class _TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext context) {
-    
+    ScreenAdapter.init(context);
 
     return Scaffold(
       body: PageView(

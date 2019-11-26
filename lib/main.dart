@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
 
         initialRoute: '/',
         onGenerateRoute: onGenerateRoute,
-        home: LaunchPage(),
+        // home: LaunchPage(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Themes.primaryColor

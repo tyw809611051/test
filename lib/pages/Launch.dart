@@ -47,34 +47,43 @@ class _LaunchPageState extends State<LaunchPage> {
     ScreenAdapter.init(context);
     return Material(
       color: Colors.white,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Container(
+      // child: Column(
+      //   mainAxisAlignment: MainAxisAlignment.start,
+      //   crossAxisAlignment: CrossAxisAlignment.center,
+      //   children: <Widget>[
+      //     Expanded(
+      //       flex: 2,
+      //       child: Container(
+      //         // height: 50,
+      //         width: 250,
+      //         margin: EdgeInsets.only(top: 50),
+      //         child: Image.asset(
+      //           "lib/assets/imgs/launch_image.jpg",
+      //           fit: BoxFit.contain,
+      //         ),
+      //       ),
+      //     ),
+      //     Expanded(
+      //       flex: 6,
+      //       child: Container(
+      //         margin: EdgeInsets.only(top: 30),
+      //         child: Text(
+      //           "高端电子元器件在线一站式委托/检测平台",
+      //           style: TextStyle(fontSize: 18),
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      child: Container(
               // height: 50,
-              width: 250,
-              margin: EdgeInsets.only(top: 50),
+              // width: 250,
+              // margin: EdgeInsets.only(top: 50),
               child: Image.asset(
-                "lib/assets/imgs//slogo.jpg",
-                fit: BoxFit.contain,
+                "lib/assets/imgs/launch_image.png",
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          Expanded(
-            flex: 6,
-            child: Container(
-              margin: EdgeInsets.only(top: 30),
-              child: Text(
-                "高端电子元器件在线一站式委托/检测平台",
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

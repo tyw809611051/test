@@ -424,6 +424,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                                 Text("加急"),
                                 Container(
                                   width: ScreenAdapter.width(45),
+                                  height: ScreenAdapter.height(80),
                                   child: Checkbox(
                                     value: this._expedited,
                                     activeColor: Themes.primaryColor,
@@ -448,6 +449,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                                 Text("贮存"),
                                 Container(
                                   width: ScreenAdapter.width(45),
+                                  height: ScreenAdapter.height(90),
                                   child: Checkbox(
                                     value: this._storage,
                                     activeColor: Themes.primaryColor,
@@ -501,6 +503,7 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                                 Text("质检服务"),
                                 Container(
                                   width: ScreenAdapter.width(45),
+                                  height: ScreenAdapter.height(90),
                                   child: Checkbox(
                                     value: this._inspectedService,
                                     activeColor: Themes.primaryColor,
@@ -521,32 +524,10 @@ class _NewPageState extends State<NewPage> with AutomaticKeepAliveClientMixin {
                             ),
                             Row(
                               children: <Widget>[
-                                Text("下场服务"),
-                                Container(
-                                  width: ScreenAdapter.width(45),
-                                  child: Checkbox(
-                                    value: this._factoryService,
-                                    activeColor: Themes.primaryColor,
-                                    // checkColor: Themes.primaryColor,
-                                    onChanged: (bool bol) {
-                                      if (mounted) {
-                                        bol
-                                            ? services.add(3)
-                                            : services.remove(3);
-                                        setState(() {
-                                          this._factoryService = bol;
-                                        });
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
                                 Text("采购服务"),
                                 Container(
                                   width: ScreenAdapter.width(45),
+                                  height: ScreenAdapter.height(90),
                                   child: Checkbox(
                                     value: this._purchaseService,
                                     activeColor: Themes.primaryColor,

@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   var _password;
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
   }
 
@@ -42,28 +42,26 @@ class _LoginPageState extends State<LoginPage> {
 
     if (username.isEmpty) {
       Fluttertoast.showToast(
-        msg: "账号不能为空",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER
-      );
+          msg: "账号不能为空",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
 
       return null;
     }
 
     if (password.isEmpty) {
       Fluttertoast.showToast(
-        msg: "密码不能为空",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER
-      );
+          msg: "密码不能为空",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
 
       return null;
     }
 
     var res = await Api.login({
-        "username": username,
-        "password": password,
-        "type": "account",
+      "username": username,
+      "password": password,
+      "type": "account",
     });
 
     bool codeRes = Utils.showToast(res["error_code"], res["msg"]);
@@ -74,18 +72,17 @@ class _LoginPageState extends State<LoginPage> {
     Map userInfo = res["data"];
 
     String token = userInfo["token"];
-    int cid      = userInfo["cid"];
-    int uid      = userInfo["uid"];
-    int plat     = userInfo["plat"];
+    int cid = userInfo["cid"];
+    int uid = userInfo["uid"];
+    int plat = userInfo["plat"];
     // print(userInfo["plat"] is double);
     String roles = userInfo["roles"].join(',');
 
     if (roles.indexOf("c_admin") == -1 && roles.indexOf("c_user") == -1) {
       Fluttertoast.showToast(
-        msg: "抱歉,目前只对用户端开放!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER
-      );
+          msg: "抱歉,目前只对用户端开放!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER);
 
       return null;
     }
@@ -98,9 +95,8 @@ class _LoginPageState extends State<LoginPage> {
     await Storage.setString("plat", plat.toString());
 
     Navigator.of(context).pushAndRemoveUntil(
-      new MaterialPageRoute(builder:(context)=>new Tabs()), 
-      (route)=>route==null
-    );
+        new MaterialPageRoute(builder: (context) => new Tabs()),
+        (route) => route == null);
   }
 
   @override
@@ -116,8 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                 height: 40,
                 width: 150,
                 margin: EdgeInsets.only(top: 50),
-                child: Image.asset(
-                  "lib/assets/imgs//slogo.jpg",
+                child: Image.network(
+                  "https://www.cisslab.com/slogo.png",
                   fit: BoxFit.cover,
                 ),
               ),
@@ -199,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerRight,
                     child: InkWell(
                       onTap: () {
-                         Navigator.pushNamed(context, '/register');
+                        Navigator.pushNamed(context, '/register');
                       },
                       child: Text("企业注册"),
                     ),

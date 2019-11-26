@@ -10,5 +10,5 @@ class Env {
   // 请求API
   static const String API = "https://api.test.cisslab.com/";
   // 调试模式
-  static const bool DEBUG = true;
+  static const bool DEBUG = false;
 }
