@@ -22,8 +22,8 @@ class Label extends StatelessWidget {
             height: ScreenAdapter.height(40),
             margin: EdgeInsets.only(right: 10),
             padding: EdgeInsets.fromLTRB(
-              ScreenAdapter.width(20), ScreenAdapter.height(4), 
-              ScreenAdapter.height(20), ScreenAdapter.height(4)
+              ScreenAdapter.width(20), ScreenAdapter.height(1), 
+              ScreenAdapter.height(20), ScreenAdapter.height(1)
               ),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
