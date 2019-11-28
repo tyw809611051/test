@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import '../pages/Tabs.dart';
 import '../pages/users/Login.dart';
 import '../pages/users/Register.dart';
+import '../pages//users/Agreement.dart';
+import '../pages/users/Privacy.dart';
 import '../pages/TaskDetail.dart';
+
 
 final routes={
   '/': (context) => Tabs(),
   '/login': (context) => LoginPage(),
   '/register': (context) => RegisterPage(),
   '/taskDetail': (context,{arguments}) => TaskDetailPage(arguments: arguments),
+  '/agreement': (context) => AgreementPage(),
+  '/privacy': (context) => PrivacyPage(),
 };
 
 /**

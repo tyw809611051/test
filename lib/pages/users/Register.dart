@@ -42,6 +42,8 @@ class _RegisterPageState extends State<RegisterPage> {
   // 倒计时
   int _countdownTime = 0;
   Timer _timer;
+  // 服务条框
+  bool _service = false;
 
   @override
   void dispose() {
@@ -65,9 +67,9 @@ class _RegisterPageState extends State<RegisterPage> {
     };
     this._timer = Timer.periodic(Duration(seconds: 1), call);
   }
+
   // 发送短信
   _sendVerCode() async {
-
     if (this._phone == null || this._phone == "") {
       Fluttertoast.showToast(
           msg: "请填写手机号码",
@@ -99,13 +101,17 @@ class _RegisterPageState extends State<RegisterPage> {
         msg: res['msg'],
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER);
-    
+
     //倒计时
     _startCountDown();
   }
 
   // 注册
   _registerAccount() async {
+    if (!this._service) {
+      Utils.showToast(401, "请先勾选同意《用户协议》和《隐私政策》");
+      return false;
+    }
     if (this._phone == null || this._phone == "") {
       Utils.showToast(401, "手机号码不能为空");
       return false;
@@ -163,14 +169,13 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     Fluttertoast.showToast(
-          msg: "注册成功",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER);
-    
+        msg: "注册成功",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER);
+
     this._timer = Utils.startTimeout(() {
       Navigator.of(context).pop();
-    },2000);
-  
+    }, 2000);
   }
 
   @override
@@ -281,8 +286,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: RaisedButton(
                           textColor: Colors.white,
                           color: Themes.primaryColor,
-                          child: (this._countdownTime > 0) ? Text("${this._countdownTime}s") : Text("获取验证码"),
-                          onPressed: (this._countdownTime == 0) ? this._sendVerCode : null,
+                          child: (this._countdownTime > 0)
+                              ? Text("${this._countdownTime}s")
+                              : Text("获取验证码"),
+                          onPressed: (this._countdownTime == 0)
+                              ? this._sendVerCode
+                              : null,
                         ),
                       ),
                     ],
@@ -529,14 +538,82 @@ class _RegisterPageState extends State<RegisterPage> {
                 )
               ],
             ),
+
             // 注册
             Container(
+              // height: ScreenAdapter.height(150),
               child: BaseButton(
                 text: "注册",
                 color: Themes.btnPrimaryColor,
                 cb: this._registerAccount,
               ),
             ),
+            // 用户协议和隐私权政策
+            Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    height: ScreenAdapter.height(100),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: ScreenAdapter.height(40),
+                          child: Checkbox(
+                            value: this._service,
+                            activeColor: Themes.primaryColor,
+                            // checkColor: Themes.primaryColor,
+                            onChanged: (bool bol) {
+                              if (mounted) {
+                                setState(() {
+                                  this._service = bol;
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        Container(
+                          height: ScreenAdapter.height(40),
+                          alignment: Alignment.center,
+                          child: Text("同意"),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/agreement');
+                          },
+                          child: Container(
+                            height: ScreenAdapter.height(40),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "《用户协议》",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: ScreenAdapter.height(40),
+                          alignment: Alignment.center,
+                          child: Text("和"),
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/privacy');
+                            },
+                            child: Container(
+                              height: ScreenAdapter.height(40),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "《隐私政策》",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            )),
+                      ],
+                    )),
+              ],
+            ),
+
             // 版权
             Copyright(),
           ],
