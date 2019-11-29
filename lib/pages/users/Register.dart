@@ -588,7 +588,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             alignment: Alignment.center,
                             child: Text(
                               "《用户协议》",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Themes.primaryColor,fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -606,7 +606,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               alignment: Alignment.center,
                               child: Text(
                                 "《隐私政策》",
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(color: Themes.primaryColor, fontWeight: FontWeight.bold),
                               ),
                             )),
                       ],

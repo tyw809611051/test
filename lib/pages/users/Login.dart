@@ -27,8 +27,8 @@ class _LoginPageState extends State<LoginPage> {
   // 全局formkey
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  var _username;
-  var _password;
+  var _username = "";
+  var _password = "";
 
   @override
   void initState() {
@@ -183,8 +183,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
+
+            BaseButton(
+              text: "登录",
+              color: Themes.btnPrimaryColor,
+              cb: this._loginHandle,
+            ),
             Container(
-              padding: EdgeInsets.all(30),
+              padding: EdgeInsets.fromLTRB(15, 10, 15, 30),
               child: Stack(
                 children: <Widget>[
                   // Align(
@@ -192,25 +198,16 @@ class _LoginPageState extends State<LoginPage> {
                   //   child: Text("忘记密码"),
                   // ),
                   Align(
-                    alignment: Alignment.centerRight,
+                    alignment: Alignment.center,
                     child: InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, '/register');
                       },
-                      child: Text("企业注册"),
+                      child: Text("企业注册",style: TextStyle(color: Themes.primaryColor),),
                     ),
                   ),
                 ],
               ),
-            ),
-
-            BaseButton(
-              text: "登录",
-              color: Themes.btnPrimaryColor,
-              cb: this._loginHandle,
-            ),
-            SizedBox(
-              height: 50,
             ),
             Copyright(),
           ],

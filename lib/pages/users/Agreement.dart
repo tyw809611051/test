@@ -51,7 +51,7 @@ class AgreementPage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.only(top: 5, bottom: 3),
                     child: Text(
-                      "${topBlackSpace}《蜂鸟云测平台用户协议》（以下简称协议）由国科赛思（北京）科技有限公司（以下简称赛思库）与需求用户（以下简称用户）签订，有助于用户了解国科赛思为用户提供的服务内容及用户使用服务的权利和义务。为维护用户自身权益，请用户仔细阅读（特别是以粗体标注的内容）、充分理解各条款内容，其中各条款前所列索引关键词仅为帮助用户理解该条款表达的主旨之用，不影响或限制协议条款的含义或解释。",
+                      "${topBlackSpace}《蜂鸟云测平台用户协议》（以下简称协议）由蜂鸟云测APP（以下简称本APP）与需求用户（以下简称用户）签订，有助于用户了解本APP为用户提供的服务内容及用户使用服务的权利和义务。为维护用户自身权益，请用户仔细阅读（特别是以粗体标注的内容）、充分理解各条款内容，其中各条款前所列索引关键词仅为帮助用户理解该条款表达的主旨之用，不影响或限制协议条款的含义或解释。",
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
@@ -83,19 +83,19 @@ class AgreementPage extends StatelessWidget {
                   ),
                   Container(
                     child: Text(
-                      "${topBlackSpace}（二）Cisslab.com（蜂鸟云测）：由国科赛思提供元器件检测服务、方案服务和采购服务的在线平台网站，网址为https://www.cisslab.com/（此URL可由国科赛思根据业务需要不时修改）。",
+                      "${topBlackSpace}（二）Cisslab.com（蜂鸟云测）：提供元器件检测服务、方案服务和采购服务的在线平台网站，网址为https://www.cisslab.com/（此URL可由本APP根据业务需要不时修改）。",
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
                   Container(
                     child: Text(
-                      "${topBlackSpace}（三）蜂鸟云测平台规则：国科赛思已经发布及后续发布的全部的与产品、服务、技术、费用、法律声明及隐私权政策、知识产权、保密、违约、争议解决等内容相关的规则、解读、实施细则、说明、公告等或与用户另行签订书面补充协议等；赛思库平台规则为协议不可分割的一部分，与协议正文具有同等法律效力。",
+                      "${topBlackSpace}（三）本APP规则：已经发布及后续发布的全部的与产品、服务、技术、费用、法律声明及隐私权政策、知识产权、保密、违约、争议解决等内容相关的规则、解读、实施细则、说明、公告等或与用户另行签订书面补充协议等；本APP平台规则为协议不可分割的一部分，与协议正文具有同等法律效力。",
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
                   Container(
                     child: Text(
-                      "${topBlackSpace}（四）用户：即发布需求用户，是指在蜂鸟云测平台上发布需求的机构或个人。",
+                      "${topBlackSpace}（四）用户：即发布需求用户，是指在本APP上发布需求的机构或个人。",
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
@@ -129,7 +129,7 @@ class AgreementPage extends StatelessWidget {
                   ),
                   Container(
                     child: Text(
-                      "${topBlackSpace}（二）国科赛思可根据国家法律法规变化及维护需求发布秩序、保护用户的消费者权益需要，不时修改本协议（以下简称变更事项）并通过https://www.cissdata.com予以公布。如用户不同意变更事项，用户有权在变更事项确定的生效日前联系国科赛思并提出书面的反馈意见。如书面的反馈意见得以采纳，国科赛思将酌情调整变更事项。如用户对调整后变更事项仍不同意的，用户应当于调整后的变更事项确定的生效之日起停止使用赛思库平台，调整后的变更事项对用户不产生效力；如用户在调整后的变更事项生效后仍继续使用蜂鸟云测平台，则视为用户同意已生效的调整后的变更事项。",
+                      "${topBlackSpace}（二）本APP可根据国家法律法规变化及维护需求发布秩序、保护用户的消费者权益需要，不时修改本协议（以下简称变更事项）并通过https://www.cisslab.com予以公布。如用户不同意变更事项，用户有权在变更事项确定的生效日前联系本APP并提出书面的反馈意见。如书面的反馈意见得以采纳，本APP将酌情调整变更事项。如用户对调整后变更事项仍不同意的，用户应当于调整后的变更事项确定的生效之日起停止使用本APP平台，调整后的变更事项对用户不产生效力；如用户在调整后的变更事项生效后仍继续使用蜂鸟云测平台，则视为用户同意已生效的调整后的变更事项。",
                       style: TextStyle(fontSize: 12),
                     ),
                   ),
@@ -156,7 +156,7 @@ class AgreementPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${secondBlackSpace}1.用户注册蜂鸟云测账户时，应当是根据用户住所地法律规定合法设立的、持续存在的公司、企业等非自然人组织、机构。",
+                    "${secondBlackSpace}1.用户注册本APP账户时，应当是根据用户住所地法律规定合法设立的、持续存在的公司、企业等非自然人组织、机构。",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
@@ -204,7 +204,7 @@ class AgreementPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "${secondBlackSpace}1.用户及可以通过账户名及初始密码登录蜂鸟云测平台后，可享受本协议项下的服务并根据蜂鸟云测平台规定改变用户的密码。",
+                    "${secondBlackSpace}1.用户及可以通过账户名及初始密码登录本APP后，可享受本协议项下的服务并根据本APP规定改变用户的密码。",
                     style: TextStyle(fontSize: 12),
                   ),
                 ],
@@ -220,7 +220,7 @@ class AgreementPage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(bottom: 5),
-                    child: Text("四、赛思库平台的使用",
+                    child: Text("四、本APP的使用",
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Text(
@@ -228,7 +228,7 @@ class AgreementPage extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}1.用户通过蜂鸟云测平台提交委托单，包括但不限于名称、型号、数量、封装以及用户信息，因信息虚假或存在问题引起的一切问题均有用户自行承担。",
+                    "${secondBlackSpace}1.用户通过本APP提交委托单，包括但不限于名称、型号、数量、封装以及用户信息，因信息虚假或存在问题引起的一切问题均有用户自行承担。",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
@@ -244,7 +244,7 @@ class AgreementPage extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}3.服务完成后用户和国科赛思线下结算。",
+                    "${secondBlackSpace}3.服务完成后线下结算。",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
@@ -280,11 +280,11 @@ class AgreementPage extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}3.利用蜂鸟云测平台从事洗钱、窃取商业秘密、窃取个人信息等违法犯罪活动；",
+                    "${secondBlackSpace}3.利用本APP从事洗钱、窃取商业秘密、窃取个人信息等违法犯罪活动；",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}4.干扰蜂鸟云测平台的正常运转，包括但不限于侵入蜂鸟云测平台及国家计算机信息系统；",
+                    "${secondBlackSpace}4.干扰本APP的正常运转，包括但不限于侵入本APP及国家计算机信息系统；",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
@@ -296,7 +296,7 @@ class AgreementPage extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}7.教唆他人从事赛思库平台所禁止的行为；",
+                    "${secondBlackSpace}7.教唆他人从事本APP平台所禁止的行为；",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
@@ -316,19 +316,19 @@ class AgreementPage extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}2.其有合法的权利缔结本协议、使用国科赛思提供的服务；",
+                    "${secondBlackSpace}2.其有合法的权利缔结本协议、使用本APP提供的服务；",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}3.遵守诚实信用原则，确保提交给蜂鸟云测平台的信息真实，并在交易过程中切实履行用户的承诺；",
+                    "${secondBlackSpace}3.遵守诚实信用原则，确保提交给本APP的信息真实，并在交易过程中切实履行用户的承诺；",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}4.对其在蜂鸟云测平台上的言论和行为承担法律责任",
+                    "${secondBlackSpace}4.对其在本APP上的言论和行为承担法律责任",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}5.不对蜂鸟云测平台的任何数据进行商务利用，包括但不限于在未经国科赛思事先书面批准的情况下、以任何方式使用蜂鸟云测平台数据。若违反上述承诺，给平台或其他用户带来损失或不良影响的，平台有权停止、解除本协议，并按平台相关要求赔偿因此带来的全部损失。",
+                    "${secondBlackSpace}5.不对本APP的任何数据进行商务利用，包括但不限于在未经本APP事先书面批准的情况下、以任何方式使用本APP数据。若违反上述承诺，给本APP或其他用户带来损失或不良影响的，本APP有权停止、解除本协议，并按本APP相关要求赔偿因此带来的全部损失。",
                     style: TextStyle(fontSize: 12),
                   ),
                 ],
@@ -344,7 +344,7 @@ class AgreementPage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(bottom: 5),
-                    child: Text("六、国科赛思的权利和义务",
+                    child: Text("六、本APP的权利和义务",
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
                   Text(
@@ -356,19 +356,19 @@ class AgreementPage extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}2.用户违反本协议约定或者法律规定的，国科赛思有权作出独立判断并采取暂停或关闭用户的蜂鸟云测平台等措施。",
+                    "${secondBlackSpace}2.用户违反本协议约定或者法律规定的，本APP有权作出独立判断并采取暂停或关闭用户的账户等措施。",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}3.国科赛思在提前30天以网站公告的形式通知用户后，有权根据业务调整情况将本协议项下的全部权利义务一并转移给其关联公司，若有异议，应在公示期内与平台联系协商。",
+                    "${secondBlackSpace}3.本APP在提前30天以网站公告的形式通知用户后，有权根据业务调整情况将本协议项下的全部权利义务一并转移给其关联公司，若有异议，应在公示期内与平台联系协商。",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}4.国科赛思有权不时地对协议及蜂鸟云测平台的内容进行修改，并在蜂鸟云测平台公示，无须另行通知用户。",
+                    "${secondBlackSpace}4.本APP有权不时地对协议及本APP的内容进行修改，并在本APP公示，无须另行通知用户。",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}5.国科赛思在法律允许的最大限度范围内对本协议及蜂鸟云测平台内容拥有解释权。",
+                    "${secondBlackSpace}5.本APP在法律允许的最大限度范围内对本协议及本APP内容拥有解释权。",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
@@ -376,11 +376,11 @@ class AgreementPage extends StatelessWidget {
                     style: TextStyle(fontSize: 14),
                   ),
                   Text(
-                    "${secondBlackSpace}1.国科赛思有义务在现有技术上维护整个蜂鸟云测平台的正常运行，并努力提升和改进技术，使用户网上交易活动得以顺利进行。",
+                    "${secondBlackSpace}1.本APP有义务在现有技术上维护整个APP的正常运行，并努力提升和改进技术，使用户网上交易活动得以顺利进行。",
                     style: TextStyle(fontSize: 12),
                   ),
                   Text(
-                    "${secondBlackSpace}2.对用户在注册和使用服务中所遇到的与交易或注册有关的问题及反映的情况，国科赛思应及时作出回复。",
+                    "${secondBlackSpace}2.对用户在注册和使用服务中所遇到的与交易或注册有关的问题及反映的情况，本APP应及时作出回复。",
                     style: TextStyle(fontSize: 12),
                   ),
                 ],
